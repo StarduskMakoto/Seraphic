@@ -19,11 +19,22 @@ func _unhandled_input(event: InputEvent) -> void:
 		_attack({"dest": dest})
 
 @rpc("reliable")
-func set_nickname(new_name : String):
+func set_nickname(new_name : String, new_color : String):
 	if new_name == "":
 		$Name.text = name
-		return
-	$Name.text = new_name
+	else:
+		$Name.text = new_name
+	
+	if new_color == "":
+		$SpellModule.modulate = Color("FFFFFF")
+	else:
+		$SpellModule.modulate = new_color
+	
+	print(name)
+
+func update_nickname_to_clients():
+	rpc("set_nickname", get_parent().get("nickname"), get_parent().get("colorhex"))
+	set_nickname(get_parent().get("nickname"), get_parent().get("colorhex"))
 
 func _ready() -> void:
 	name = str(get_multiplayer_authority())
@@ -31,6 +42,8 @@ func _ready() -> void:
 	$Name.text = name
 	if is_multiplayer_authority():
 		$Camera2D.make_current()
+		rpc("set_nickname", get_parent().get("nickname"), get_parent().get("colorhex"))
+		set_nickname(get_parent().get("nickname"), get_parent().get("colorhex"))
 	$Stats/HP._setup(100, HealthBar)
 
 func _physics_process(delta: float) -> void:
@@ -63,7 +76,7 @@ func _physics_process(delta: float) -> void:
 		velocity.y = move_toward(velocity.y, 0, SPEED)
 	
 	rpc("update_position", self.global_position, $Sprite2D.scale)
-	rpc("set_nickname", $Name.text)
+	#rpc("set_nickname", $Name.text)
 	
 	move_and_slide()
 

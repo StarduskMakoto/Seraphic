@@ -7,9 +7,11 @@ var upnp = UPNP.new()
 const PORT = 9999
 var ADDRESS = "localhost"
 
-@onready var ip_node : TextEdit = $CanvasLayer/UI/Menu/IP
+@onready var ip_node : TextEdit = $CanvasLayer/UI/SplashScreen/Menu/IP
 
 var connected_peer_ids = []
+@export var nickname : String = ""
+@export var colorhex : String = ""
 
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
@@ -35,7 +37,9 @@ func _notification(what: int) -> void:
 
 
 func _on_host_pressed() -> void:
-	$CanvasLayer/UI/Menu.visible = false
+	$CanvasLayer/UI/SplashScreen.visible = false
+	nickname = $CanvasLayer/UI/SplashScreen/Menu/TextEdit.text
+	colorhex = $CanvasLayer/UI/SplashScreen/ColorPicker.color.to_html(false)
 	
 	multiplayer_peer.create_server(PORT)
 	multiplayer.multiplayer_peer = multiplayer_peer
@@ -62,7 +66,10 @@ func _on_host_pressed() -> void:
 	)
 
 func _on_join_pressed() -> void:
-	$CanvasLayer/UI/Menu.visible = false
+	$CanvasLayer/UI/SplashScreen.visible = false
+	
+	nickname = $CanvasLayer/UI/SplashScreen/Menu/TextEdit.text
+	colorhex = $CanvasLayer/UI/SplashScreen/ColorPicker.color.to_html(false)
 	var text = ip_node.text
 	if text != "":
 		ADDRESS = text
@@ -91,9 +98,10 @@ func add_previously_connected_player_characters(peer_ids):
 @rpc("reliable")
 func share_nickname(peer_id):
 	await get_tree().create_timer(0.5).timeout
-	var nick_name = $CanvasLayer/UI/Menu/TextEdit.text
-	rpc("share_nickname_to_clients", nick_name, peer_id)
-	share_nickname_to_clients(nick_name, peer_id)
+	#var nick_name = $CanvasLayer/UI/Menu/TextEdit.text
+	#rpc("share_nickname_to_clients", nick_name, peer_id)
+	#share_nickname_to_clients(nick_name, peer_id)
+	self.get_node(str(peer_id)).update_nickname_to_clients()
 	pass
 
 @rpc("reliable")
