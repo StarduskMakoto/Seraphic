@@ -1,4 +1,4 @@
-[gd_scene load_steps=13 format=3 uid="uid://c2ghd4iyt58my"]
+[gd_scene load_steps=14 format=3 uid="uid://c2ghd4iyt58my"]
 
 [ext_resource type="Script" path="res://Scripts/player_character.gd" id="1_4fftt"]
 [ext_resource type="Texture2D" uid="uid://byt2xf75s43kd" path="res://Assets/test Character.png" id="1_ypu4h"]
@@ -10,6 +10,7 @@
 [ext_resource type="Script" path="res://Scripts/Spells/spell_magic_blast.gd" id="8_his6a"]
 [ext_resource type="Script" path="res://Scripts/spell_caster.gd" id="8_yynlm"]
 [ext_resource type="Script" path="res://Scripts/Spells/spell_moonshards.gd" id="10_a1de5"]
+[ext_resource type="Script" path="res://Scripts/Spells/spell_guiding_blink.gd" id="11_t8d74"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_13hg5"]
 size = Vector2(34, 57)
@@ -260,3 +261,8 @@ spellstring = "0122"
 script = ExtResource("10_a1de5")
 casterParent = NodePath("../..")
 spellstring = "3330"
+
+[node name="GuidingBlink" type="Node2D" parent="Spells" node_paths=PackedStringArray("casterParent")]
+script = ExtResource("11_t8d74")
+casterParent = NodePath("../..")
+spellstring = "1200"
