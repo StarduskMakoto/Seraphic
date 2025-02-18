@@ -1,0 +1,136 @@
+[gd_scene load_steps=13 format=3 uid="uid://bwwue3u5voy3i"]
+
+[ext_resource type="Texture2D" uid="uid://by8uh611ajk0o" path="res://Assets/Attacks/MoonShard.png" id="1_84rnw"]
+[ext_resource type="Script" path="res://Scripts/Attacks/moon_shards.gd" id="1_ucck2"]
+[ext_resource type="Script" path="res://Scripts/trail_2d.gd" id="3_phwin"]
+[ext_resource type="Texture2D" uid="uid://dm40gyes6e60q" path="res://Assets/Attacks/empty_particle.png" id="3_wv3nx"]
+
+[sub_resource type="Curve2D" id="Curve2D_q3j2d"]
+_data = {
+"points": PackedVector2Array(0, 0, 0, 0, 0, 0, 0, 30, 0, -30, -65, -62, -30, 0, 30, 0, 0, -125, 0, 30, 0, -30, 65, -187, 0, 0, 0, 0, 0, -250)
+}
+point_count = 5
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_ixo2y"]
+radius = 34.3188
+
+[sub_resource type="Curve2D" id="Curve2D_pe3dm"]
+_data = {
+"points": PackedVector2Array(0, 0, 0, 0, 0, 0, 0, 30, 0, -30, 65, -62, 30, 0, -30, 0, 0, -125, 0, 30, 0, -30, -65, -187, 0, 0, 0, 0, 0, -250)
+}
+point_count = 5
+
+[sub_resource type="Curve" id="Curve_1hi6h"]
+min_value = -1.0
+max_value = 2.0
+_data = [Vector2(0.28626, 2), 0.0, 0.0, 0, 0, Vector2(0.790076, -1), 0.0, 0.0, 0, 0]
+point_count = 2
+
+[sub_resource type="Gradient" id="Gradient_ucwg6"]
+offsets = PackedFloat32Array(0, 0.375, 0.6875, 0.875)
+colors = PackedColorArray(0.9505, 1, 0.67, 1, 0.77, 0.5544, 0.231, 1, 0.58, 0.193817, 0.087, 1, 0.19, 0.0855, 0.101175, 1)
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_7ghvv"]
+radius = 25.0799
+
+[sub_resource type="Curve" id="Curve_3mr8m"]
+_data = [Vector2(0, 1), 0.0, 0.0, 0, 0, Vector2(1, 0), 0.0, 0.0, 0, 0]
+point_count = 2
+
+[sub_resource type="Gradient" id="Gradient_o4igk"]
+offsets = PackedFloat32Array(0, 0.107143, 0.241071, 0.4375, 1)
+colors = PackedColorArray(0.0377583, 0.0345, 0.23, 0, 0.0541749, 0.0495, 0.33, 1, 0.13, 0.3055, 0.52, 1, 0.231, 0.660917, 0.7, 1, 0.75, 1, 0.7625, 1)
+
+[node name="Node2D" type="Node2D" node_paths=PackedStringArray("children")]
+script = ExtResource("1_ucck2")
+children = [NodePath("LPath/PathFollow2D"), NodePath("RPath/PathFollow2D")]
+
+[node name="LPath" type="Path2D" parent="."]
+curve = SubResource("Curve2D_q3j2d")
+
+[node name="PathFollow2D" type="PathFollow2D" parent="LPath"]
+rotation = -2.37981
+
+[node name="MoonShard" type="Sprite2D" parent="LPath/PathFollow2D"]
+self_modulate = Color(0.9272, 0.95, 0.722, 1)
+rotation = 1.5708
+scale = Vector2(0.3, 0.3)
+texture = ExtResource("1_84rnw")
+
+[node name="Area2D" type="Area2D" parent="LPath/PathFollow2D"]
+rotation = 1.5708
+scale = Vector2(0.3, 0.3)
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="LPath/PathFollow2D/Area2D"]
+shape = SubResource("CircleShape2D_ixo2y")
+
+[node name="RPath" type="Path2D" parent="."]
+curve = SubResource("Curve2D_pe3dm")
+
+[node name="PathFollow2D" type="PathFollow2D" parent="RPath"]
+rotation = -0.761781
+
+[node name="MoonShard" type="Sprite2D" parent="RPath/PathFollow2D"]
+self_modulate = Color(0.9272, 0.95, 0.722, 1)
+rotation = 1.5708
+scale = Vector2(0.3, 0.3)
+texture = ExtResource("1_84rnw")
+
+[node name="Area2D" type="Area2D" parent="RPath/PathFollow2D"]
+rotation = 1.5708
+scale = Vector2(0.3, 0.3)
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="RPath/PathFollow2D/Area2D"]
+shape = SubResource("CircleShape2D_ixo2y")
+
+[node name="Target" type="Node2D" parent="."]
+position = Vector2(0, -250)
+
+[node name="CPUParticles2D" type="CPUParticles2D" parent="Target"]
+emitting = false
+amount = 32
+one_shot = true
+explosiveness = 0.5
+fixed_fps = 30
+draw_order = 1
+texture = ExtResource("3_wv3nx")
+emission_shape = 1
+emission_sphere_radius = 15.0
+gravity = Vector2(0, 45)
+angular_velocity_min = -300.0
+angular_velocity_max = 300.0
+radial_accel_min = 100.0
+radial_accel_max = 100.0
+radial_accel_curve = SubResource("Curve_1hi6h")
+angle_min = -90.0
+angle_max = 90.0
+scale_amount_max = 2.0
+color_ramp = SubResource("Gradient_ucwg6")
+
+[node name="Area2D" type="Area2D" parent="Target"]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Target/Area2D"]
+shape = SubResource("CircleShape2D_7ghvv")
+disabled = true
+debug_color = Color(1, 0.666667, 0, 0.419608)
+
+[node name="Trail2D" type="Line2D" parent="." node_paths=PackedStringArray("TARGET")]
+points = PackedVector2Array(0, 0)
+width_curve = SubResource("Curve_3mr8m")
+gradient = SubResource("Gradient_o4igk")
+script = ExtResource("3_phwin")
+LIFETIME = 1.0
+TARGET = NodePath("../LPath/PathFollow2D/MoonShard")
+
+[node name="Trail2D2" type="Line2D" parent="." node_paths=PackedStringArray("TARGET")]
+points = PackedVector2Array(0, 0)
+width_curve = SubResource("Curve_3mr8m")
+gradient = SubResource("Gradient_o4igk")
+script = ExtResource("3_phwin")
+LIFETIME = 1.0
+TARGET = NodePath("../RPath/PathFollow2D/MoonShard")
+
+[connection signal="body_entered" from="LPath/PathFollow2D/Area2D" to="." method="_on_area_2d_body_entered"]
+[connection signal="body_entered" from="RPath/PathFollow2D/Area2D" to="." method="_on_area_2d_body_entered"]
+[connection signal="finished" from="Target/CPUParticles2D" to="." method="_on_gpu_particles_2d_finished"]
+[connection signal="body_entered" from="Target/Area2D" to="." method="_on_explosion_body_entered"]

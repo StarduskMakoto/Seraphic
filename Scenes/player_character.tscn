@@ -1,0 +1,262 @@
+[gd_scene load_steps=13 format=3 uid="uid://c2ghd4iyt58my"]
+
+[ext_resource type="Script" path="res://Scripts/player_character.gd" id="1_4fftt"]
+[ext_resource type="Texture2D" uid="uid://byt2xf75s43kd" path="res://Assets/test Character.png" id="1_ypu4h"]
+[ext_resource type="Texture2D" uid="uid://cfrliglbo5kvy" path="res://Assets/UI/hp_down.png" id="3_13wid"]
+[ext_resource type="Texture2D" uid="uid://cfww72vtm8im4" path="res://Assets/UI/hp_top.png" id="4_ybatl"]
+[ext_resource type="Script" path="res://Scripts/hp.gd" id="5_a7oq1"]
+[ext_resource type="Script" path="res://Scripts/spell_module.gd" id="6_6br71"]
+[ext_resource type="Texture2D" uid="uid://b42s5tfmkpmko" path="res://Assets/UI/RuneEmpty.tres" id="7_4x6et"]
+[ext_resource type="Script" path="res://Scripts/Spells/spell_magic_blast.gd" id="8_his6a"]
+[ext_resource type="Script" path="res://Scripts/spell_caster.gd" id="8_yynlm"]
+[ext_resource type="Script" path="res://Scripts/Spells/spell_moonshards.gd" id="10_a1de5"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_13hg5"]
+size = Vector2(34, 57)
+
+[sub_resource type="Curve2D" id="Curve2D_gx1nk"]
+_data = {
+"points": PackedVector2Array(-29.3665, 1.33484, 30, 0, 80, 0, 0, -90, 0, 90, 160, 105, 30, 0, -30, 0, 80, 210, 0, 90, 0, -90, 0, 105, -30, 0, 0, 0, 80, 0)
+}
+point_count = 5
+
+[node name="CharacterBody2D" type="CharacterBody2D" groups=["Player"]]
+texture_filter = 1
+motion_mode = 1
+script = ExtResource("1_4fftt")
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+texture = ExtResource("1_ypu4h")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+position = Vector2(-2, 1.5)
+shape = SubResource("RectangleShape2D_13hg5")
+
+[node name="Camera2D" type="Camera2D" parent="."]
+
+[node name="Name" type="Label" parent="."]
+offset_left = -37.0
+offset_top = -68.0
+offset_right = 37.0
+offset_bottom = -45.0
+text = "14525235"
+horizontal_alignment = 1
+
+[node name="HPBar" type="TextureProgressBar" parent="."]
+anchors_preset = 5
+anchor_left = 0.5
+anchor_right = 0.5
+offset_left = -50.0
+offset_top = -43.0
+offset_right = 50.0
+offset_bottom = -34.0
+grow_horizontal = 2
+value = 50.0
+nine_patch_stretch = true
+texture_under = ExtResource("3_13wid")
+texture_progress = ExtResource("4_ybatl")
+
+[node name="Stats" type="Node" parent="."]
+
+[node name="HP" type="Node" parent="Stats"]
+script = ExtResource("5_a7oq1")
+
+[node name="SpellModule" type="Control" parent="."]
+layout_mode = 3
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -80.0
+offset_top = -104.0
+offset_right = 80.0
+offset_bottom = -64.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("6_6br71")
+
+[node name="Path2D" type="Path2D" parent="SpellModule"]
+curve = SubResource("Curve2D_gx1nk")
+
+[node name="Rune1" type="PathFollow2D" parent="SpellModule/Path2D"]
+position = Vector2(80, 0)
+rotates = false
+
+[node name="Rune1" type="TextureRect" parent="SpellModule/Path2D/Rune1"]
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -30.0
+offset_top = -30.0
+offset_right = 50.0
+offset_bottom = 50.0
+grow_horizontal = 2
+grow_vertical = 2
+scale = Vector2(0.75, 0.75)
+mouse_filter = 2
+texture = ExtResource("7_4x6et")
+metadata/_edit_use_anchors_ = true
+
+[node name="Rune2" type="PathFollow2D" parent="SpellModule/Path2D"]
+position = Vector2(143.245, 33.2399)
+progress = 74.6954
+rotates = false
+
+[node name="Rune1" type="TextureRect" parent="SpellModule/Path2D/Rune2"]
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -30.0
+offset_top = -30.0
+offset_right = 50.0
+offset_bottom = 50.0
+grow_horizontal = 2
+grow_vertical = 2
+scale = Vector2(0.75, 0.75)
+mouse_filter = 2
+texture = ExtResource("7_4x6et")
+metadata/_edit_use_anchors_ = true
+
+[node name="Rune3" type="PathFollow2D" parent="SpellModule/Path2D"]
+position = Vector2(160, 105)
+progress = 149.391
+rotates = false
+
+[node name="Rune1" type="TextureRect" parent="SpellModule/Path2D/Rune3"]
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -30.0
+offset_top = -30.0
+offset_right = 50.0
+offset_bottom = 50.0
+grow_horizontal = 2
+grow_vertical = 2
+scale = Vector2(0.75, 0.75)
+mouse_filter = 2
+texture = ExtResource("7_4x6et")
+
+[node name="Rune4" type="PathFollow2D" parent="SpellModule/Path2D"]
+position = Vector2(143.245, 176.76)
+progress = 224.086
+rotates = false
+
+[node name="Rune1" type="TextureRect" parent="SpellModule/Path2D/Rune4"]
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -30.0
+offset_top = -30.0
+offset_right = 50.0
+offset_bottom = 50.0
+grow_horizontal = 2
+grow_vertical = 2
+scale = Vector2(0.75, 0.75)
+mouse_filter = 2
+texture = ExtResource("7_4x6et")
+
+[node name="Rune5" type="PathFollow2D" parent="SpellModule/Path2D"]
+position = Vector2(79.9996, 210)
+progress = 298.782
+rotates = false
+
+[node name="Rune1" type="TextureRect" parent="SpellModule/Path2D/Rune5"]
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -30.0
+offset_top = -30.0
+offset_right = 50.0
+offset_bottom = 50.0
+grow_horizontal = 2
+grow_vertical = 2
+scale = Vector2(0.75, 0.75)
+mouse_filter = 2
+texture = ExtResource("7_4x6et")
+
+[node name="Rune6" type="PathFollow2D" parent="SpellModule/Path2D"]
+position = Vector2(16.7553, 176.76)
+progress = 373.477
+rotates = false
+
+[node name="Rune1" type="TextureRect" parent="SpellModule/Path2D/Rune6"]
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -30.0
+offset_top = -30.0
+offset_right = 50.0
+offset_bottom = 50.0
+grow_horizontal = 2
+grow_vertical = 2
+scale = Vector2(0.75, 0.75)
+mouse_filter = 2
+texture = ExtResource("7_4x6et")
+
+[node name="Rune7" type="PathFollow2D" parent="SpellModule/Path2D"]
+position = Vector2(4.45761e-10, 105)
+progress = 448.173
+rotates = false
+
+[node name="Rune1" type="TextureRect" parent="SpellModule/Path2D/Rune7"]
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -30.0
+offset_top = -30.0
+offset_right = 50.0
+offset_bottom = 50.0
+grow_horizontal = 2
+grow_vertical = 2
+scale = Vector2(0.75, 0.75)
+mouse_filter = 2
+texture = ExtResource("7_4x6et")
+
+[node name="Rune8" type="PathFollow2D" parent="SpellModule/Path2D"]
+position = Vector2(16.7552, 33.24)
+progress = 522.868
+rotates = false
+
+[node name="Rune1" type="TextureRect" parent="SpellModule/Path2D/Rune8"]
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -30.0
+offset_top = -30.0
+offset_right = 50.0
+offset_bottom = 50.0
+grow_horizontal = 2
+grow_vertical = 2
+scale = Vector2(0.75, 0.75)
+mouse_filter = 2
+texture = ExtResource("7_4x6et")
+
+[node name="Spells" type="Node2D" parent="."]
+script = ExtResource("8_yynlm")
+
+[node name="MagicBlast" type="Node2D" parent="Spells" node_paths=PackedStringArray("casterParent")]
+script = ExtResource("8_his6a")
+casterParent = NodePath("../..")
+spellstring = "0122"
+
+[node name="MoonShards" type="Node2D" parent="Spells" node_paths=PackedStringArray("casterParent")]
+script = ExtResource("10_a1de5")
+casterParent = NodePath("../..")
+spellstring = "3330"
